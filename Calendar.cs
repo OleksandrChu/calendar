@@ -5,50 +5,56 @@ namespace calendar
 {
     public class Calendar
     {
-        private const int defaultDay = 1;
-        private Lazy<int> defaultYear = new Lazy<int>(() => DateTime.Now.Year);
+        private const int DefaultDay = 1;
+        private Lazy<int> currentYear = new Lazy<int>(() => DateTime.Now.Year);
         private DateTime date;
-        private int dayInMonth;
-
         public Calendar(int year, int month)
         {
-            date = new DateTime(year, month, defaultDay);
-            dayInMonth = DateTime.DaysInMonth(year, month);
+            date = new DateTime(year, month, DefaultDay);
         }
 
         public Calendar(int month)
         {
-            date = new DateTime(defaultYear.Value, month, defaultDay);
-            dayInMonth = DateTime.DaysInMonth(defaultYear.Value, month);
+            date = new DateTime(currentYear.Value, month, DefaultDay);
         }
 
         public void Print()
         {
-
-            Console.WriteLine("\t\t" + date.ToString("MMMM") + " " + date.ToString("yyyy"));
-            Console.WriteLine("Sun\tMo\tTu\tWe\tThu\tFri\tSat");
-            for (int i = 0; i < 6; i++)
+            int currentMonth = date.Month;
+            PrintHeaders();
+            for (int row = 0; row < 6; row++)
             {
                 for (int dayCode = 0; dayCode < 7; dayCode++)
                 {
-                    if ((int)date.DayOfWeek == dayCode)
+                    if ((int)date.DayOfWeek == dayCode && date.Month == currentMonth)
                     {
-                        // if(dayCode == (int)Days.Saturday || dayCode == (int)Days.Saturday) {
-                        //     Console.ForegroundColor = ConsoleColor.Red;
-                        // }
-                        Console.Write($"{date.Day}\t");
+                        PrintDay();
                         date = date.AddDays(1);
                     }
                     else
                     {
                         Console.Write("\t");
                     }
-
                 }
-
                 Console.WriteLine();
             }
+        }
 
+        private void PrintHeaders()
+        {
+            Console.WriteLine("\t\t" + date.ToString("MMMM") + " " + date.ToString("yyyy"));
+            Console.WriteLine("Sun\tMo\tTu\tWe\tThu\tFri\tSat");
+        }
+
+        private void PrintDay() {
+            if(date.DayOfWeek.Equals(DayOfWeek.Saturday) || date.DayOfWeek.Equals(DayOfWeek.Sunday)) 
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.Write($"{date.Day}\t");
+                Console.ResetColor();
+            } else {
+                 Console.Write($"{date.Day}\t");
+            }
         }
     }
 }
