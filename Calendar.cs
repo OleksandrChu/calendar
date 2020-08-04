@@ -46,15 +46,18 @@ namespace calendar
             Console.WriteLine("Sun\tMo\tTu\tWe\tThu\tFri\tSat");
         }
 
-        private void PrintDay() {
-            if(date.DayOfWeek.Equals(DayOfWeek.Saturday) || date.DayOfWeek.Equals(DayOfWeek.Sunday)) 
+        private void PrintDay()
+        {
+            if (date.DayOfWeek.Equals(DayOfWeek.Saturday) || date.DayOfWeek.Equals(DayOfWeek.Sunday))
             {
                 Console.ForegroundColor = ConsoleColor.Red;
-                Console.Write($"{date.Day}\t");
-                Console.ResetColor();
-            } else {
-                 Console.Write($"{date.Day}\t");
             }
+            else if (DateTime.Equals(date, DateTime.Now.Date))
+            {
+                Console.BackgroundColor = ConsoleColor.Blue;
+            }
+            Console.Write($"{date.Day}\t");
+            Console.ResetColor();
         }
     }
 }
