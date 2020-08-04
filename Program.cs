@@ -1,4 +1,5 @@
 ﻿using System;
+using calendar;
 
 namespace calendar
 {
@@ -6,7 +7,14 @@ namespace calendar
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            DateTime time = new DateTime(2020, 8, 1);
+            
+            new Calendar(2020, 8).Print();
+
+            Console.WriteLine();
+
+            new Calendar(7).Print();
+
         }
     }
 }
